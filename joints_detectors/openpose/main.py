@@ -6,7 +6,7 @@ sys.path.insert(0, dir_path)
 import ipdb;pdb=ipdb.set_trace
 import argparse
 from tqdm import tqdm
-from utils import convert
+#from utils import convert
 import numpy as np
 
 sys.path.remove(dir_path)
@@ -30,6 +30,23 @@ params['number_people_max'] = 1
 #  params['num_gpu'] = 1
 #  params['num_gpu_start'] = 1
 #  import ipdb;ipdb.set_trace()
+
+# convert openpose keypoints(25) format to coco keypoints(17) format
+def convert(op_kpts):
+    '''
+    0-16 map to 0,16,15,18,17,5,2,6,3,7,4,12,9,13,10,14,11
+    '''
+    coco_kpts = []
+    for i, j in enumerate([0,16,15,18,17,5,2,6,3,7,4,12,9,13,10,14,11]):
+        score = op_kpts[j][-1]
+        # if eye, ear keypoints score is lower, map it to mouth
+        if score < 0.2 and j in [15, 16, 17, 18]:
+            coco_kpts.append(op_kpts[0])
+        else:
+            coco_kpts.append(op_kpts[j])
+
+    return coco_kpts
+
 
 
 def load_model():

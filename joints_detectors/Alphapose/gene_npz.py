@@ -35,10 +35,11 @@ if not args.sp:
 
 
 def model_load():
+    model=None
     return model
 
 def image_interface(model, image):
-
+    pass
 
 def handle_video(videofile):
     args.video = videofile

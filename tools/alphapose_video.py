@@ -98,7 +98,7 @@ def main():
     # load trained model
     chk_filename = os.path.join(args.checkpoint, args.resume if args.resume else args.evaluate)
     print('Loading checkpoint', os.path.join(main_path,chk_filename))
-    checkpoint = torch.load(os.path.join(main_path,chk_filename), map_location=lambda storage, loc: storage)# 把loc映射到storage
+    checkpoint = torch.load(os.path.join(main_path,chk_filename), map_location=lambda storage, loc: storage)
     model_pos.load_state_dict(checkpoint['model_pos'])
 
 
